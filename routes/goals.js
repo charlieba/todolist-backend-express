@@ -12,9 +12,9 @@ router.delete('/removeGoal/:id', function(req, res, next) {
     if(req.params && req.params.id){
         let id = req.params.id;
         tasks = tasks.filter(task => task.id == id); 
-        res.json(goals)
+        res.status(200).json(goals)
     }else {
-        es.json({})
+        res.status(400).jjson({})
     }
 });
 
@@ -25,7 +25,7 @@ router.post('/addGoal', function(req, res, next) {
         req.body.id = timestamp;
         tasks.push(req.body);
     }
-    res.json(goals);
+    res.status(400).json(goals);
    // res.send('respond with a resource');
 });
 
