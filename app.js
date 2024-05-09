@@ -5,9 +5,57 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/desarrolloWeb');
+
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  database : 'mysql'
+});
+
+connection.connect(function(err) {
+  if (err) {
+    console.error('error connecting: ' + err.stack);
+    return;
+  }
+ 
+  console.log('connected as id ' + connection.threadId);
+});
+let queryCreateDB = 'CREATE DATABASE IF NOT EXISTS desarrolloWeb;';
+let queryCreateTableGoals='CREATE TABLE IF NOT EXISTS `goals` (  \
+  `id` int(11) NOT NULL auto_increment, \    \
+  `name` varchar(250)  NOT NULL default \'\', \
+  `description` varchar(250)  NOT NULL default \'\', \
+  `dueDate` varchar(250)  NOT NULL default \'\', \
+   PRIMARY KEY  (`id`) \
+  );'
+
+connection.query(queryCreateDB, function (err, results, fields){
+  if(err){
+    console.log(err);
+  }else{
+    console.log(results);
+    console.log(fields);
+  }
+});
+
+connection.query(queryCreateTableGoals, function (err, results, fields){
+  if(err){
+    console.log(err);
+  }else{
+    console.log(results);
+    console.log(fields);
+  }
+});
+connection.destroy()
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var taksRouter = require('./routes/tasks');
+var goalsRouter = require('./routes/goals');
 const router = express.Router()
 
 var app = express();
@@ -37,6 +85,7 @@ router.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tasks', taksRouter);
+app.use('/goals', goalsRouter);
 
 
 // catch 404 and forward to error handler
