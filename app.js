@@ -23,7 +23,10 @@ connection.connect(function(err) {
  
   console.log('connected as id ' + connection.threadId);
 });
-let queryCreateDB = 'CREATE DATABASE IF NOT EXISTS desarrolloWeb;';
+// si en dado caso no se ejecuta este código utilizar desde la consola de mysql:
+// use mysql;  
+// CREATE TABLE IF NOT EXISTS desarrolloWeb;
+let queryCreateDB = 'CREATE DATABASE IF NOT EXISTS mysql;';
 let queryCreateTableGoals='CREATE TABLE IF NOT EXISTS `goals` (  \
   `id` int(11) NOT NULL auto_increment, \    \
   `name` varchar(250)  NOT NULL default \'\', \
